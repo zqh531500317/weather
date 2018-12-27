@@ -24,7 +24,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private OkHttpClient client = new OkHttpClient();
     private static final String URL = "http://api.yytianqi.com/citylist/id/2";
-    private static final String WeatherURL = "http://api.yytianqi.com/forecast7d?city=%s&key=hr6q876tnj79b8gb";
     private ProvinceDao provinceDao = new ProvinceDao();
     private CityDao cityDao = new CityDao();
     private CountyDao countyDao = new CountyDao();
@@ -58,47 +57,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void showCountyData() {
         List<County> list = countyDao.list();
-    }
-
-    private void showWeather(WeatherApi weatherApi) {
-        
-    }
-
-    /**
-     * 获取天气情况
-     *
-     * @param county_id id
-     */
-    private void getWeather(String county_id) {
-        //用province_id替换%s
-        String url = String.format(WeatherURL, county_id);
-        final Request request = new Request.Builder()
-                .get()
-                .tag(this)
-                .url(url)
-                .build();
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Response response;
-                try {
-                    response = client.newCall(request).execute();
-                    if (response.isSuccessful()) {
-                        String data = response.body().string();
-                        Log.i("获取天气信息。。。", "获取到信息为：" + data);
-                        //json转换
-                        Gson gson = new Gson();
-                        WeatherApi weatherApi = gson.fromJson(data, WeatherApi.class);
-                        showWeather(weatherApi);
-                    } else {
-                        throw new IOException("Unexpected code " + response);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        thread.start();
     }
 
     /**
