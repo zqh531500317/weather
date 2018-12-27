@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<litepal>
+    <dbname value="weather"/>
+    <version value="2"/>
+    <list>
+        <mapping class="com.zqh.android.weather.db.City"/>
+        <mapping class="com.zqh.android.weather.db.County"/>
+        <mapping class="com.zqh.android.weather.db.Province"/>
+    </list>
+</litepal>
